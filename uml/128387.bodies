@@ -1,0 +1,26 @@
+class Ellipsoid
+!!!128515.cpp!!!	Ellipsoid(in position : Vector, in coefficients : Vector, in material_scalars : Vector, in diffuse_color : Vector, in specular_color : Vector, in specularity : int)
+
+!!!128643.cpp!!!	~Ellipsoid()
+
+!!!128771.cpp!!!	RayIntersects(in dir : Vector, in origin : Vector, inout t1 : float, inout t2 : float) : SceneObject
+
+	Vector A2d = Vector(squared_coefficients_[0] * dir[0], squared_coefficients_[1] * dir[1], squared_coefficients_[2] * dir[2]);
+	Vector Ad = Vector(coefficients_[0] * dir[0], coefficients_[1] * dir[1], coefficients_[2] * dir[2]);
+	Vector n = origin - position_;
+	Vector An = Vector(coefficients_[0] * n[0], coefficients_[1] * n[1], coefficients_[2] * n[2]);
+	
+	float a = Ad * Ad;
+	float b = 2.0f * n * A2d;
+	float c = An * An - 1;
+	float discriminant = b * b - 4.0f * a * c;
+	
+	if (discriminant < 0) return nullptr;
+
+	*t1 = -b + sqrt(discriminant) / (2.0f * a);
+	*t2 = -b - sqrt(discriminant) / (2.0f * a);
+	return this;
+!!!128899.cpp!!!	Normal(in point : Vector) : Vector
+
+	Vector diff_point = point - position_;
+	return Vector(diff_point[0] / squared_coefficients_[0], diff_point[1] / squared_coefficients_[1], diff_point[2] / squared_coefficients_[2]).Normed();

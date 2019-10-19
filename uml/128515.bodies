@@ -1,0 +1,13 @@
+class LitSceneObject
+!!!132867.cpp!!!	TextureMap() : Texture
+ 
+  if (textured_) {
+    return &texture_map_; 
+  }
+  return nullptr;
+!!!133251.cpp!!!	LightData(in point : Vector) : LightingParcel
+
+  if (textured_) {
+    light_data_.diffuse_color = texture_map_.ColorAt(point);  
+  }
+  return light_data_;

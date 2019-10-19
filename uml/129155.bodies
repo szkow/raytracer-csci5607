@@ -1,0 +1,40 @@
+class PolyObject
+!!!130563.cpp!!!	PolyObject(in verts : std::vector<Vector>, in indices : std::vector<unsigned int>, in normals : std::vector<Vector>, in normal_indices : std::vector<unsigned int>, in uvs : std::vector<Vector>, in uv_indices : std::vector<unsigned int>, in material_scalars : Vector, in diffuse_color : Vector, in specular_color : Vector, in specularity : float)
+
+  Triangle::MakeTris(this, &tris_, verts_, indices, normals_, normal_indices,
+                     tex_coords_, uv_indices);
+!!!130691.cpp!!!	PolyObject(in verts : std::vector<Vector>, in indices : std::vector<unsigned int>, in normals : std::vector<Vector>, in normal_indices : std::vector<unsigned int>, in uvs : std::vector<Vector>, in uv_indices : std::vector<unsigned int>, in material_scalars : Vector, in specular_color : Vector, in specularity : float, in texture_map : char)
+
+  Triangle::MakeTris(this, &tris_, verts_, indices, normals_, normal_indices,
+                     tex_coords_, uv_indices);
+!!!130947.cpp!!!	Normal(in point : Vector) : Vector
+ return Vector::Zero();
+!!!131075.cpp!!!	RayIntersects(in dir : Vector, in origin : Vector, inout t1 : float, inout t2 : float) : SceneObject
+
+  float min_distance = INFINITY;
+  SceneObject* min_tri = nullptr;
+  for (std::vector<Triangle>::iterator i = tris_.begin(); i < tris_.end();
+       ++i) {
+    float local_t1 = -1.0f, local_t2 = -1.0f;
+
+    SceneObject* hit_triangle =
+        i->RayIntersects(dir, origin, &local_t1, &local_t2);
+    if (local_t1 >= TRIANGLE_SELF_INTERSECT_EPSILON && hit_triangle != nullptr &&
+        local_t1 < min_distance) {  // Depth test
+      min_distance = local_t1;
+      min_tri = hit_triangle;
+    }
+  }
+
+  if (min_tri != nullptr) {
+    *t1 = min_distance;
+    *t2 = -1.0f;
+    return min_tri;
+  }
+
+  *t1 = -1.0f;
+  *t2 = -1.0f;
+  return nullptr;
+!!!131203.cpp!!!	LightData(in point : Vector) : LightingParcel
+
+  return light_data_;

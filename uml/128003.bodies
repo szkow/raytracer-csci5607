@@ -1,0 +1,11 @@
+class DirectionalLight
+!!!128003.cpp!!!	DirectionalLight(in direction : Vector, in color : Vector)
+
+!!!128131.cpp!!!	~DirectionalLight()
+
+!!!128259.cpp!!!	GetLightDirection(in point : Vector) : Vector
+
+	return -1.0f * direction_;
+!!!128387.cpp!!!	DistanceTo(in point : Vector) : float
+
+	return INFINITY;

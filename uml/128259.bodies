@@ -1,0 +1,64 @@
+class Vector
+!!!135555.cpp!!!	Vector(in x : float = 0.0f, in y : float = 0.0f, in z : float = 0.0f)
+
+	x_ = x;
+	y_ = y;
+	z_ = z;
+	arr_[0] = x;
+	arr_[1] = y;
+	arr_[2] = z;
+!!!135811.cpp!!!	~Vector()
+
+!!!135939.cpp!!!	Zero() : Vector
+
+	return Vector(0.0f, 0.0f, 0.0f);
+!!!136067.cpp!!!	One() : Vector
+
+	return Vector(1.0f, 1.0f, 1.0f);
+!!!136195.cpp!!!	Random() : Vector
+
+	return Vector((float)rand(), (float)rand(), (float)rand()).Normed();
+!!!136323.cpp!!!	Length() : float
+
+	return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
+!!!136451.cpp!!!	ProjectOnto(in other : Vector) : Vector
+
+  return ((*this * other) * other);
+!!!136579.cpp!!!	Normed() : Vector
+
+	float len = Length();
+	return Vector(x_ / len, y_ / len, z_ / len);
+!!!136707.cpp!!!	Cross(in other : Vector) : Vector
+
+	return Vector(y_ * other.z_ - z_ * other.y_, z_ * other.x_ - x_ * other.z_, x_ * other.y_ - y_ * other.x_);
+!!!136835.cpp!!!	Clamped(in x_clamp : float, in y_clamp : float, in z_clamp : float) : Vector
+
+	
+	return Vector(fminf(x_clamp, x_), fminf(y_clamp, y_), fminf(z_clamp, z_));
+!!!136963.cpp!!!	Clamped(in c : float) : Vector
+
+	return Clamped(c, c, c);
+!!!137091.cpp!!!	operator /(in scalar : float) : Vector
+
+	return Vector(x_ / scalar, y_ / scalar, z_ / scalar);
+!!!137219.cpp!!!	operator *(in other : Vector) : float
+
+	return x_ * other.x_ + y_ * other.y_ + z_ * other.z_;
+!!!137347.cpp!!!	operator *(in scalar : float, in v : Vector) : Vector
+
+	return Vector(v.x_ * scalar, v.y_ * scalar, v.z_ * scalar);
+!!!137475.cpp!!!	operator *(in v : Vector, in scalar : float) : Vector
+
+	return scalar * v;
+!!!137603.cpp!!!	operator +(in other : Vector) : Vector
+
+	return Vector(x_ + other.x_, y_ + other.y_, z_ + other.z_);
+!!!137731.cpp!!!	operator -(in other : Vector) : Vector
+
+	return Vector(x_ - other.x_, y_ - other.y_, z_ - other.z_);
+!!!137859.cpp!!!	operator [](in i : uint) : float
+
+	return arr_[i];
+!!!137987.cpp!!!	operator ==(in other : Vector) : bool
+
+	return x_ == other[0] && y_ == other[1] && z_ == other[2];

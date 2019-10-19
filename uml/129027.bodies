@@ -1,0 +1,23 @@
+class PointLight
+!!!129795.cpp!!!	PointLight(in position : Vector, in color : Vector, in attenuation : Vector = Vector(1, 0, 0))
+
+!!!129923.cpp!!!	~PointLight()
+
+!!!130051.cpp!!!	PhongDiffuseSpecular(in point : Vector, in normal : Vector, in view : Vector, inout light_data : SceneObject::LightingParcel) : Vector
+
+	// Calculate lighting as normal
+	Vector regular_phong = Light::PhongDiffuseSpecular(point, normal, view, light_data);
+
+	// If we don't have an attenuated light, don't do anything
+	if (attenuation_ == Vector(1, 0, 0)) return regular_phong;
+
+	// If we do need attenuation, calculate it
+	float d = DistanceTo(point);
+	float attenuation = 1.0f / (attenuation_ * Vector(1.0f, d, d * d));
+	return (attenuation > 0.0f) ? attenuation * regular_phong : regular_phong;
+!!!130179.cpp!!!	GetLightDirection(in point : Vector) : Vector
+
+	return (position_ - point).Normed();
+!!!130307.cpp!!!	DistanceTo(in point : Vector) : float
+
+	return (position_ - point).Length();

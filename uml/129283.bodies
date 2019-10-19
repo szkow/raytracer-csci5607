@@ -1,0 +1,58 @@
+class PolyObject::Triangle
+!!!131331.cpp!!!	Normal(in point : Vector) : Vector
+
+  if (n0_ == nullptr) {
+    return normal_;
+  }
+
+  float a, b, c;
+  GetAreaticCoordinates(point, &a, &b, &c);
+  return (a * *n0_ + b * *n1_ + c * *n2_).Normed();
+!!!131459.cpp!!!	LightData(in point : Vector) : LightingParcel
+
+  LightingParcel light_data = daddy_->LightData(point);
+  Texture* texture = daddy_->TextureMap();
+  if (texture != nullptr) {
+    float a, b, c;
+    GetAreaticCoordinates(point, &a, &b, &c);
+    Vector interpolated_uv = a / area_ * *uv0_ + b / area_ * *uv1_ + c / area_ * *uv2_;
+    light_data.diffuse_color = texture->ColorAt(interpolated_uv);
+  }
+  return light_data;
+!!!131587.cpp!!!	RayIntersects(in dir : Vector, in origin : Vector, inout t1 : float, inout t2 : float) : SceneObject
+
+  // Find plane intersection
+  float denominator = normal_ * dir;
+  if (std::abs(denominator) <= TRIANGLE_EPSILON) {
+    return nullptr;
+  }
+  float numerator = (*v0_ - origin) * normal_;
+  float t_plane = numerator / denominator;
+  if (t_plane < TRIANGLE_EPSILON) {
+    return nullptr;
+  }
+
+  // Find barycentric coordinates as area of triangle
+  float alpha, beta, gamma;
+  GetAreaticCoordinates(origin + dir * t_plane, &alpha, &beta, &gamma);
+
+  // Check if barycentric coordinates dictate p is in the triangle
+  if (std::abs(alpha + beta + gamma - area_) < TRIANGLE_EPSILON) {
+    *t1 = t_plane;
+    *t2 = -1.0f;
+    return this;
+  }
+
+  return nullptr;
+!!!131715.cpp!!!	GetAreaticCoordinates(in point : Vector, inout alpha : float, inout beta : float, inout gamma : float) : void
+
+  // Define plane intersection relative to v0_
+  Vector v0_to_p = point - *v0_;
+
+  // Define plane intersection relative to v1_
+  Vector v1_to_p = point - *v1_;
+
+  // Find barycentric coordinates as area of triangle
+  *alpha = 0.5f * v1_to_p.Cross(e3_).Length();
+  *beta = 0.5f * v0_to_p.Cross(e2_).Length();
+  *gamma = 0.5f * v0_to_p.Cross(e1_).Length();

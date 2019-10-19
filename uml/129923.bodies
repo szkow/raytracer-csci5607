@@ -1,0 +1,39 @@
+class Sphere
+!!!134403.cpp!!!	~Sphere()
+
+!!!134531.cpp!!!	RayIntersects(in dir : Vector, in origin : Vector, inout t1 : float, inout t2 : float) : SceneObject
+
+	Vector n = origin - position_;
+	float dir_dot_n = dir * n;
+
+	float a = dir * dir;
+	float b = 2.0f * dir_dot_n;
+	float c = n * n - radius_ * radius_;
+	float discriminant = b * b - 4.0f * a * c;
+	if (discriminant < 0.0f)	return nullptr;
+
+	*t1 = (-b - sqrtf(discriminant)) / (2.0f * a);
+	*t2 = (-b + sqrtf(discriminant)) / (2.0f * a);
+	return this;
+!!!134659.cpp!!!	Normal(in point : Vector) : Vector
+
+	return (point - position_).Normed();
+!!!134787.cpp!!!	LightData(in point : Vector) : LightingParcel
+
+  if (!textured_) {
+    return light_data_;
+  }
+  Vector n = Normal(point);
+
+  float phi = acos(n[0]);
+  float theta = atan2(n[2], n[1]);
+  float u;
+  if (theta < 0.0f) {
+    u = (theta + 2.0f * (float)M_PI) / (2.0f * (float)M_PI);
+  } else {
+    u = theta / (2.0f * (float)M_PI);
+  }
+  float v = phi / (float)M_PI;
+
+  light_data_.diffuse_color = texture_map_.ColorAt(u, v);
+  return light_data_;

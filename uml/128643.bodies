@@ -1,0 +1,3 @@
+class SceneObject
+!!!132483.cpp!!!	Position() : Vector
+ return position_;

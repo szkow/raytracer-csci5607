@@ -1,0 +1,4 @@
+class SimpleSceneObject
+!!!133763.cpp!!!	LightData(in point : Vector) : LightingParcel
+
+  return daddy_->LightData(point);

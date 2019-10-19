@@ -1,0 +1,2575 @@
+format 222
+"minch" // minch
+  revision 1
+  modified_by 3 "April"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  cpp_h_dir "C:\\Users\\April\\source\\repos\\csci5607\\minch\\minch/"
+  cpp_src_dir "C:\\Users\\April\\source\\repos\\csci5607\\minch\\minch/"
+  classview 128003 "minch"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 128003 "DirectionalLight"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128003 // <generalisation>
+	relation 128003 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 128003 // <generalisation>
+	  b parent class_ref 128131 // Light
+      end
+
+      classrelation 128131 // direction_ (<directional composition>)
+	relation 128131 *-->
+	  a role_name "direction_" private
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 128131 // direction_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      operation 128003 "DirectionalLight"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 2
+	  param in name "direction" type class_ref 128259 // Vector
+	  param in name "color" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)} : Light(Vector::Zero(), color), direction_(direction.Normed())
+${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128131 "~DirectionalLight"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128259 "GetLightDirection"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128387 "DistanceTo"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type "float"
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 128131 "Light"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128643 // position_ (<directional composition>)
+	relation 128643 *-->
+	  a role_name "position_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 128643 // position_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 128771 // color_ (<directional composition>)
+	relation 128771 *-->
+	  a role_name "color_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 128771 // color_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      operation 129155 "Light"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 2
+	  param in name "position" type class_ref 128259 // Vector
+	  param in name "color" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)} : position_(position), color_(color) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129283 "~Light"
+	cpp_virtual cpp_inline public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      operation 129411 "PhongDiffuseSpecular"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 4
+	  param in name "point" type class_ref 128259 // Vector
+	  param in name "normal" type class_ref 128259 // Vector
+	  param in name "view" type class_ref 128259 // Vector
+	  param inout name "light_data" type class_ref 128899 // LightingParcel
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129539 "GetLightDirection"
+	abstract cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 129667 "DistanceTo"
+	abstract cpp_virtual public explicit_return_type "float"
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 128259 "Vector"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 130051 "x_"
+	private explicit_type "float"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130179 "y_"
+	private explicit_type "float"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130307 "z_"
+	private explicit_type "float"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130435 "arr_"
+	private explicit_type "float"
+	multiplicity "[3]"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 135555 "Vector"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 3
+	  param in name "x" explicit_type "float"
+	    defaultvalue "0.0f"
+	  param in name "y" explicit_type "float"
+	    defaultvalue "0.0f"
+	  param in name "z" explicit_type "float"
+	    defaultvalue "0.0f"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135683 "Vector"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param in name "components" explicit_type "float"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} ${p0}[3]${v0}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} ${p0}[3]${)} : Vector(components[0], components[1], components[2]) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135811 "~Vector"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135939 "Zero"
+	class_operation preserve_cpp_body_indent constvalue public return_type class_ref 128259 // Vector
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136067 "One"
+	class_operation preserve_cpp_body_indent constvalue public return_type class_ref 128259 // Vector
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136195 "Random"
+	class_operation preserve_cpp_body_indent public return_type class_ref 128259 // Vector
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136323 "Length"
+	preserve_cpp_body_indent const public explicit_return_type "float"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136451 "ProjectOnto"
+	preserve_cpp_body_indent public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "other" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136579 "Normed"
+	preserve_cpp_body_indent const public return_type class_ref 128259 // Vector
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136707 "Cross"
+	preserve_cpp_body_indent const public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "other" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136835 "Clamped"
+	preserve_cpp_body_indent public return_type class_ref 128259 // Vector
+	nparams 3
+	  param in name "x_clamp" explicit_type "float"
+	  param in name "y_clamp" explicit_type "float"
+	  param in name "z_clamp" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136963 "Clamped"
+	preserve_cpp_body_indent public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "c" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137091 "operator /"
+	preserve_cpp_body_indent const public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "scalar" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137219 "operator *"
+	preserve_cpp_body_indent const public explicit_return_type "float"
+	nparams 1
+	  param in name "other" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "/ <summary> Takes the dot product of two vectors </summary>"
+      end
+
+      operation 137347 "operator *"
+	preserve_cpp_body_indent friend public return_type class_ref 128259 // Vector
+	nparams 2
+	  param in name "scalar" explicit_type "float"
+	  param in name "v" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137475 "operator *"
+	preserve_cpp_body_indent friend public return_type class_ref 128259 // Vector
+	nparams 2
+	  param in name "v" type class_ref 128259 // Vector
+	  param in name "scalar" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137603 "operator +"
+	preserve_cpp_body_indent const public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "other" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137731 "operator -"
+	preserve_cpp_body_indent const public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "other" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137859 "operator []"
+	preserve_cpp_body_indent const public explicit_return_type "float"
+	nparams 1
+	  param in name "i" explicit_type "uint"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137987 "operator =="
+	preserve_cpp_body_indent const public explicit_return_type "bool"
+	nparams 1
+	  param in name "other" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 128387 "Ellipsoid"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128259 // <generalisation>
+	relation 128259 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 128259 // <generalisation>
+	  b parent class_ref 128515 // LitSceneObject
+      end
+
+      classrelation 128387 // coefficients_ (<directional composition>)
+	relation 128387 *-->
+	  a role_name "coefficients_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 128387 // coefficients_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 128515 // squared_coefficients_ (<directional composition>)
+	relation 128515 *-->
+	  a role_name "squared_coefficients_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 128515 // squared_coefficients_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      operation 128515 "Ellipsoid"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 6
+	  param in name "position" type class_ref 128259 // Vector
+	  param in name "coefficients" type class_ref 128259 // Vector
+	  param in name "material_scalars" type class_ref 128259 // Vector
+	  param in name "diffuse_color" type class_ref 128259 // Vector
+	  param in name "specular_color" type class_ref 128259 // Vector
+	  param in name "specularity" explicit_type "int"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}, const ${t4} & ${p4}${v4}, ${t5} ${p5}${v5}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}, const ${t4} & ${p4}, ${t5} ${p5}${)} :
+	LitSceneObject(position, material_scalars, diffuse_color, specular_color, specularity), coefficients_(coefficients), squared_coefficients_(Vector(coefficients[0] * coefficients[0], coefficients[1] * coefficients[1], coefficients[2] * coefficients[2]))
+${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128643 "~Ellipsoid"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128771 "RayIntersects"
+	preserve_cpp_body_indent public return_type class_ref 128643 // SceneObject
+	nparams 4
+	  param in name "dir" type class_ref 128259 // Vector
+	  param in name "origin" type class_ref 128259 // Vector
+	  param inout name "t1" explicit_type "float"
+	  param inout name "t2" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} * ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128899 "Normal"
+	preserve_cpp_body_indent public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 128515 "LitSceneObject"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+A SceneObject with lighting data
+"
+      classrelation 131971 // <generalisation>
+	relation 131971 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 131971 // <generalisation>
+	  b parent class_ref 128643 // SceneObject
+      end
+
+      operation 132611 "LitSceneObject"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 5
+	  param in name "position" type class_ref 128259 // Vector
+	    defaultvalue "Vector::Zero()"
+	  param in name "material_scalars" type class_ref 128259 // Vector
+	    defaultvalue "Vector::Zero()"
+	  param in name "diffuse_color" type class_ref 128259 // Vector
+	    defaultvalue "Vector::Zero()"
+	  param in name "specular_color" type class_ref 128259 // Vector
+	    defaultvalue "Vector::Zero()"
+	  param in name "specularity" explicit_type "float"
+	    defaultvalue "0.0f"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}, ${t4} ${p4}${v4}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}, ${t4} ${p4}${)}
+    : SceneObject(position),
+      light_data_{material_scalars, specular_color, specularity, diffuse_color},
+      texture_map_(nullptr), 
+      textured_(false) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132739 "LitSceneObject"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 5
+	  param in name "position" type class_ref 128259 // Vector
+	  param in name "material_scalars" type class_ref 128259 // Vector
+	  param in name "specular_color" type class_ref 128259 // Vector
+	  param in name "specularity" explicit_type "float"
+	  param in name "texture_map" explicit_type "char"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} ${p3}${v3}, const ${t4} * ${p4}${v4}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} ${p3}, const ${t4} * ${p4}${)}
+    : SceneObject(position),
+      light_data_{material_scalars, specular_color, specularity,
+                  -1.0f * Vector::One()},
+      texture_map_(Texture(texture_map)),
+      textured_(true) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132867 "TextureMap"
+	preserve_cpp_body_indent public return_type class_ref 129539 // Texture
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} * ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132995 "RayIntersects"
+	abstract cpp_virtual public return_type class_ref 128643 // SceneObject
+	nparams 4
+	  param in name "dir" type class_ref 128259 // Vector
+	  param in name "origin" type class_ref 128259 // Vector
+	  param inout name "t1" explicit_type "float"
+	  param inout name "t2" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} * ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 133123 "Normal"
+	abstract cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 133251 "LightData"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type "LightingParcel"
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 128387 "light_data_"
+	protected explicit_type "LightingParcel"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 132099 // texture_map_ (<directional composition>)
+	relation 132099 *-->
+	  a role_name "texture_map_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 132099 // texture_map_ (<directional composition>)
+	  b parent class_ref 129539 // Texture
+      end
+
+      attribute 128515 "textured_"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 128643 "SceneObject"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+The interface for all objects in the scene
+"
+      class 128899 "LightingParcel"
+	visibility package stereotype "struct"
+	cpp_decl "${comment}${template}struct ${name}${inherit} {
+${members}};
+${inlines}
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	classrelation 131459 // material_scalars (<directional composition>)
+	  relation 131459 *-->
+	    a role_name "material_scalars" const_relation public
+	      cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      classrelation_ref 131459 // material_scalars (<directional composition>)
+	    b parent class_ref 128259 // Vector
+	end
+
+	classrelation 131587 // specular_color (<directional composition>)
+	  relation 131587 *-->
+	    a role_name "specular_color" const_relation public
+	      cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      classrelation_ref 131587 // specular_color (<directional composition>)
+	    b parent class_ref 128259 // Vector
+	end
+
+	attribute 128259 "specularity"
+	  const_attribute public explicit_type "float"
+	  cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	classrelation 131715 // diffuse_color (<directional composition>)
+	  relation 131715 *-->
+	    a role_name "diffuse_color" public
+	      comment " This value is modified in LightData()"
+	      cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      classrelation_ref 131715 // diffuse_color (<directional composition>)
+	    b parent class_ref 128259 // Vector
+	end
+      end
+
+      operation 131843 "SceneObject"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param in name "position" type class_ref 128259 // Vector
+	    defaultvalue "Vector::Zero()"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${t0} ${p0}${)} : position_(position) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+	comment " Constructor"
+      end
+
+      operation 131971 "~SceneObject"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132099 "RayIntersects"
+	abstract cpp_virtual public return_type class_ref 128643 // SceneObject
+	nparams 4
+	  param in name "dir" type class_ref 128259 // Vector
+	  param in name "origin" type class_ref 128259 // Vector
+	  param inout name "t1" explicit_type "float"
+	  param inout name "t2" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} * ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+	comment " Pure virtuals"
+      end
+
+      operation 132227 "Normal"
+	abstract cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 132355 "LightData"
+	abstract cpp_virtual public return_type class_ref 128899 // LightingParcel
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 132483 "Position"
+	preserve_cpp_body_indent constvalue cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} & ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment " Virtuals"
+      end
+
+      classrelation 131843 // position_ (<directional composition>)
+	relation 131843 *-->
+	  a role_name "position_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 131843 // position_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+    end
+
+    class 128771 "ImageWriter"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 129027 "PpmWrite"
+	class_operation preserve_cpp_body_indent public explicit_return_type "int"
+	nparams 4
+	  param in name "filename" explicit_type "char"
+	  param in name "pixels" explicit_type "float"
+	  param in name "width" explicit_type "int"
+	  param in name "height" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} * ${p0}${v0}, const ${t1} * ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 129027 "PointLight"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128899 // <generalisation>
+	relation 128899 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 128899 // <generalisation>
+	  b parent class_ref 128131 // Light
+      end
+
+      classrelation 129027 // attenuation_ (<directional composition>)
+	relation 129027 *-->
+	  a role_name "attenuation_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 129027 // attenuation_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      operation 129795 "PointLight"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 3
+	  param in name "position" type class_ref 128259 // Vector
+	  param in name "color" type class_ref 128259 // Vector
+	  param in name "attenuation" type class_ref 128259 // Vector
+	    defaultvalue "Vector(1, 0, 0)"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)} : Light(position, color), attenuation_(attenuation)
+${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129923 "~PointLight"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130051 "PhongDiffuseSpecular"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 4
+	  param in name "point" type class_ref 128259 // Vector
+	  param in name "normal" type class_ref 128259 // Vector
+	  param in name "view" type class_ref 128259 // Vector
+	  param inout name "light_data" type class_ref 128899 // LightingParcel
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130179 "GetLightDirection"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130307 "DistanceTo"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type "float"
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 129155 "PolyObject"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 129155 // <generalisation>
+	relation 129155 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 129155 // <generalisation>
+	  b parent class_ref 128515 // LitSceneObject
+      end
+
+      operation 130435 "PolyObject"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)} : LitSceneObject() ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130563 "PolyObject"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 10
+	  param in name "verts" explicit_type "std::vector<Vector>"
+	  param in name "indices" explicit_type "std::vector<unsigned int>"
+	  param in name "normals" explicit_type "std::vector<Vector>"
+	  param in name "normal_indices" explicit_type "std::vector<unsigned int>"
+	  param in name "uvs" explicit_type "std::vector<Vector>"
+	  param in name "uv_indices" explicit_type "std::vector<unsigned int>"
+	  param in name "material_scalars" type class_ref 128259 // Vector
+	  param in name "diffuse_color" type class_ref 128259 // Vector
+	  param in name "specular_color" type class_ref 128259 // Vector
+	  param in name "specularity" explicit_type "float"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}, const ${t4} & ${p4}${v4}, const ${t5} & ${p5}${v5}, const ${t6} & ${p6}${v6}, const ${t7} & ${p7}${v7}, const ${t8} & ${p8}${v8}, ${t9} ${p9}${v9}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}, const ${t4} & ${p4}, const ${t5} & ${p5}, const ${t6} & ${p6}, const ${t7} & ${p7}, const ${t8} & ${p8}, ${t9} ${p9}${)}
+    : LitSceneObject(Vector::Zero(), material_scalars, diffuse_color,
+                     specular_color, specularity),
+      verts_(verts),
+      normals_(normals),
+      tex_coords_(uvs) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130691 "PolyObject"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 10
+	  param in name "verts" explicit_type "std::vector<Vector>"
+	  param in name "indices" explicit_type "std::vector<unsigned int>"
+	  param in name "normals" explicit_type "std::vector<Vector>"
+	  param in name "normal_indices" explicit_type "std::vector<unsigned int>"
+	  param in name "uvs" explicit_type "std::vector<Vector>"
+	  param in name "uv_indices" explicit_type "std::vector<unsigned int>"
+	  param in name "material_scalars" type class_ref 128259 // Vector
+	  param in name "specular_color" type class_ref 128259 // Vector
+	  param in name "specularity" explicit_type "float"
+	  param in name "texture_map" explicit_type "char"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}, const ${t4} & ${p4}${v4}, const ${t5} & ${p5}${v5}, const ${t6} & ${p6}${v6}, const ${t7} & ${p7}${v7}, ${t8} ${p8}${v8}, const ${t9} * ${p9}${v9}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}, const ${t4} & ${p4}, const ${t5} & ${p5}, const ${t6} & ${p6}, const ${t7} & ${p7}, ${t8} ${p8}, const ${t9} * ${p9}${)}
+    : LitSceneObject(Vector::Zero(), material_scalars, specular_color,
+                     specularity, texture_map),
+      verts_(verts),
+      normals_(normals),
+      tex_coords_(uvs) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130819 "~PolyObject"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130947 "Normal"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131075 "RayIntersects"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128643 // SceneObject
+	nparams 4
+	  param in name "dir" type class_ref 128259 // Vector
+	  param in name "origin" type class_ref 128259 // Vector
+	  param inout name "t1" explicit_type "float"
+	  param inout name "t2" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} * ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131203 "LightData"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type "LightingParcel"
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      extra_member 128003 "Triangle"
+	
+	stereotype "class"
+	cpp "    class Triangle;
+" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+	mysql ""
+      end
+
+      attribute 128003 "tris_"
+	protected explicit_type "Triangle"
+	stereotype "std::vector"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 129283 // verts_ (<directional composition>)
+	relation 129283 *-->
+	  stereotype "std::vector"
+	  a role_name "verts_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 129283 // verts_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 129411 // normals_ (<directional composition>)
+	relation 129411 *-->
+	  stereotype "std::vector"
+	  a role_name "normals_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 129411 // normals_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 129539 // tex_coords_ (<directional composition>)
+	relation 129539 *-->
+	  stereotype "std::vector"
+	  a role_name "tex_coords_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 129539 // tex_coords_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+    end
+
+    class 129283 "PolyObject::Triangle"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 129667 // <generalisation>
+	relation 129667 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 129667 // <generalisation>
+	  b parent class_ref 129411 // SimpleSceneObject
+      end
+
+      operation 131331 "Normal"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131459 "LightData"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type "LightingParcel"
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131587 "RayIntersects"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128643 // SceneObject
+	nparams 4
+	  param in name "dir" type class_ref 128259 // Vector
+	  param in name "origin" type class_ref 128259 // Vector
+	  param inout name "t1" explicit_type "float"
+	  param inout name "t2" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} * ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131715 "GetAreaticCoordinates"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 4
+	  param in name "point" type class_ref 128259 // Vector
+	  param inout name "alpha" explicit_type "float"
+	  param inout name "beta" explicit_type "float"
+	  param inout name "gamma" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} * ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 129795 // v0_ (<unidirectional association>)
+	relation 129795 --->
+	  a role_name "v0_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 129795 // v0_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 129923 // v1_ (<unidirectional association>)
+	relation 129923 --->
+	  a role_name "v1_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 129923 // v1_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 130051 // v2_ (<unidirectional association>)
+	relation 130051 --->
+	  a role_name "v2_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 130051 // v2_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 130179 // n0_ (<unidirectional association>)
+	relation 130179 --->
+	  a role_name "n0_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 130179 // n0_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 130307 // n1_ (<unidirectional association>)
+	relation 130307 --->
+	  a role_name "n1_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 130307 // n1_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 130435 // n2_ (<unidirectional association>)
+	relation 130435 --->
+	  a role_name "n2_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 130435 // n2_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 130563 // uv0_ (<unidirectional association>)
+	relation 130563 --->
+	  a role_name "uv0_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 130563 // uv0_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 130691 // uv1_ (<unidirectional association>)
+	relation 130691 --->
+	  a role_name "uv1_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 130691 // uv1_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 130819 // uv2_ (<unidirectional association>)
+	relation 130819 --->
+	  a role_name "uv2_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 130819 // uv2_ (<unidirectional association>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 130947 // normal_ (<directional composition>)
+	relation 130947 *-->
+	  a role_name "normal_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 130947 // normal_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 131075 // e1_ (<directional composition>)
+	relation 131075 *-->
+	  a role_name "e1_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 131075 // e1_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 131203 // e2_ (<directional composition>)
+	relation 131203 *-->
+	  a role_name "e2_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 131203 // e2_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 131331 // e3_ (<directional composition>)
+	relation 131331 *-->
+	  a role_name "e3_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 131331 // e3_ (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      attribute 128131 "area_"
+	protected explicit_type "float"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 129411 "SimpleSceneObject"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+A SceneObject with no lighting data. If it needs to be rendered,
+it has a pointer to LitSceneObject which it can steal light and
+color data from.
+
+This is primarily used to represent polygons in a PolyObject.
+"
+      classrelation 132227 // <generalisation>
+	relation 132227 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 132227 // <generalisation>
+	  b parent class_ref 128643 // SceneObject
+      end
+
+      operation 133379 "SimpleSceneObject"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 2
+	  param inout name "daddy" type class_ref 128515 // LitSceneObject
+	    defaultvalue "nullptr"
+	  param in name "position" type class_ref 128259 // Vector
+	    defaultvalue "Vector::Zero()"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${t0} * ${p0}, ${t1} ${p1}${)}
+    : SceneObject(position), daddy_(daddy) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 133507 "RayIntersects"
+	abstract cpp_virtual public return_type class_ref 128643 // SceneObject
+	nparams 4
+	  param in name "dir" type class_ref 128259 // Vector
+	  param in name "origin" type class_ref 128259 // Vector
+	  param inout name "t1" explicit_type "float"
+	  param inout name "t2" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} * ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 133635 "Normal"
+	abstract cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 133763 "LightData"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type "LightingParcel"
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 132355 // daddy_ (<unidirectional association>)
+	relation 132355 --->
+	  a role_name "daddy_" protected
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 132355 // daddy_ (<unidirectional association>)
+	  b parent class_ref 128515 // LitSceneObject
+      end
+    end
+
+    class 129539 "Texture"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 134915 "Texture"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param in name "copy" type class_ref 129539 // Texture
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135043 "Texture"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param in name "filename" explicit_type "char"
+	    defaultvalue "nullptr"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} * ${p0}${v0}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135171 "~Texture"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135299 "ColorAt"
+	preserve_cpp_body_indent public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135427 "ColorAt"
+	preserve_cpp_body_indent public return_type class_ref 128259 // Vector
+	nparams 2
+	  param in name "u" explicit_type "float"
+	  param in name "v" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 129667 "map_"
+	protected type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * * ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129795 "width_"
+	protected explicit_type "uint"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129923 "height_"
+	protected explicit_type "uint"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 129667 "SceneReader"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      class 129795 "SceneParameters"
+	visibility package stereotype "struct"
+	cpp_decl "${comment}${template}struct ${name}${inherit} {
+${members}};
+${inlines}
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 128643 "camera_origin"
+	  public explicit_type "float"
+	  multiplicity "[3]"
+	  cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 128771 "camera_forward"
+	  public explicit_type "float"
+	  multiplicity "[3]"
+	  cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 128899 "camera_up"
+	  public explicit_type "float"
+	  multiplicity "[3]"
+	  cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 129027 "fov"
+	  public explicit_type "float"
+	  cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 129155 "image_width"
+	  public explicit_type "int"
+	  cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 129283 "image_height"
+	  public explicit_type "int"
+	  cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 129411 "background"
+	  public explicit_type "float"
+	  multiplicity "[3]"
+	  cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	classrelation 132483 // objects (<unidirectional association>)
+	  relation 132483 --->
+	    stereotype "std::vector"
+	    a role_name "objects" public
+	      cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${stereotype}<${type}*> ${name}${value};
+"
+	      classrelation_ref 132483 // objects (<unidirectional association>)
+	    b parent class_ref 128643 // SceneObject
+	end
+
+	classrelation 132611 // lights (<unidirectional association>)
+	  relation 132611 --->
+	    stereotype "std::vector"
+	    a role_name "lights" public
+	      cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${stereotype}<${type}*> ${name}${value};
+"
+	      classrelation_ref 132611 // lights (<unidirectional association>)
+	    b parent class_ref 128131 // Light
+	end
+      end
+
+      operation 133891 "Read"
+	class_operation preserve_cpp_body_indent public explicit_return_type "int"
+	nparams 2
+	  param in name "filename" explicit_type "char"
+	  param inout name "params" type class_ref 129795 // SceneParameters
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} * ${p0}${v0}, ${t1} * ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134019 "ParameterDestructor"
+	class_operation preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param inout name "params" type class_ref 129795 // SceneParameters
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 129923 "Sphere"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 132739 // <generalisation>
+	relation 132739 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 132739 // <generalisation>
+	  b parent class_ref 128515 // LitSceneObject
+      end
+
+      attribute 129539 "radius_"
+	private explicit_type "float"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 134147 "Sphere"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 6
+	  param in name "position" type class_ref 128259 // Vector
+	  param in name "radius" explicit_type "float"
+	  param in name "material_scalars" type class_ref 128259 // Vector
+	  param in name "diffuse_color" type class_ref 128259 // Vector
+	  param in name "specular_color" type class_ref 128259 // Vector
+	  param in name "specularity" explicit_type "int"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}, const ${t4} & ${p4}${v4}, ${t5} ${p5}${v5}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}, const ${t4} & ${p4}, ${t5} ${p5}${)}
+    : LitSceneObject(position, material_scalars, diffuse_color, specular_color,
+                     specularity),
+      radius_(radius) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134275 "Sphere"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 6
+	  param in name "position" type class_ref 128259 // Vector
+	  param in name "radius" explicit_type "float"
+	  param in name "material_scalars" type class_ref 128259 // Vector
+	  param in name "specular_color" type class_ref 128259 // Vector
+	  param in name "specularity" explicit_type "int"
+	  param in name "texture_map" explicit_type "char"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}, ${t4} ${p4}${v4}, const ${t5} * ${p5}${v5}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}, ${t4} ${p4}, const ${t5} * ${p5}${)}
+    : LitSceneObject(position, material_scalars, specular_color, specularity,
+                     texture_map),
+      radius_(radius) ${throw}{
+${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134403 "~Sphere"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134531 "RayIntersects"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128643 // SceneObject
+	nparams 4
+	  param in name "dir" type class_ref 128259 // Vector
+	  param in name "origin" type class_ref 128259 // Vector
+	  param inout name "t1" explicit_type "float"
+	  param inout name "t2" explicit_type "float"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} * ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134659 "Normal"
+	preserve_cpp_body_indent cpp_virtual public return_type class_ref 128259 // Vector
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134787 "LightData"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type "LightingParcel"
+	nparams 1
+	  param in name "point" type class_ref 128259 // Vector
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${typeprefix}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${typeprefix}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 130051 "Ray"
+      visibility package stereotype "struct"
+      cpp_decl "${comment}${template}struct ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 132867 // origin (<directional composition>)
+	relation 132867 *-->
+	  a role_name "origin" public
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 132867 // origin (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      classrelation 132995 // direction (<directional composition>)
+	relation 132995 *-->
+	  a role_name "direction" public
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 132995 // direction (<directional composition>)
+	  b parent class_ref 128259 // Vector
+      end
+
+      attribute 130563 "t"
+	public explicit_type "float"
+	cpp_decl "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 133123 // object (<unidirectional association>)
+	relation 133123 --->
+	  a role_name "object" public
+	    cpp default "    ${comment}${static}${thread_local}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 133123 // object (<unidirectional association>)
+	  b parent class_ref 128643 // SceneObject
+      end
+    end
+
+    classdiagram 128003 "base"
+      classdiagramsettings show_members_full_definition yes show_members_visibility yes show_members_stereotype yes member_max_width 55 end
+      size D
+    end
+  end
+
+  deploymentview 128003 "minch"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 128003 "DirectionalLight"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 128003 // DirectionalLight
+      end
+    end
+
+    artifact 128131 "Ellipsoid"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 128387 // Ellipsoid
+      end
+    end
+
+    artifact 128259 "ImageWriter"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 128771 // ImageWriter
+      end
+    end
+
+    artifact 128387 "Light"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 128131 // Light
+      end
+    end
+
+    artifact 128515 "PointLight"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 129027 // PointLight
+      end
+    end
+
+    artifact 128643 "PolyObject"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 129155 // PolyObject
+	class_ref 129283 // PolyObject::Triangle
+      end
+    end
+
+    artifact 128771 "SceneObject"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 128643 // SceneObject
+	class_ref 128515 // LitSceneObject
+	class_ref 129411 // SimpleSceneObject
+      end
+    end
+
+    artifact 128899 "SceneReader"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 129667 // SceneReader
+      end
+    end
+
+    artifact 129027 "Sphere"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 129923 // Sphere
+      end
+    end
+
+    artifact 129155 "Texture"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 129539 // Texture
+      end
+    end
+
+    artifact 129283 "Vector"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 128259 // Vector
+      end
+    end
+
+    artifact 129411 "main"
+      stereotype "source"
+      cpp_src "int main(int argc, char** argv) {
+    if (argc != 2) {	// Make sure we're provided enough arguments
+        fprintf(stderr, \"Insufficient arguments provided. Exiting...\\n\");
+        return 1;
+    }
+
+    char* filename = argv[1];   // Parse filename
+
+    int width, height;
+    FILE* input = fopen(filename, \"r\");
+    if (fscanf(input, \"%*s %i %i\", &width, &height) != 2) {  // Parse width and height of image
+        fprintf(stderr, \"Failed to read from file!\\n\");
+        fclose(input);
+        return 1;
+    }
+	if (width < 0 || height < 0) {	// Check validity of dimensions
+		fprintf(stderr, \"Invalid dimensions provided!\\n\");
+		fclose(input);
+		return 1;
+	}
+    fclose(input);   // Close input file
+
+
+    char* name_end = strstr(filename, \".txt\");   // Lop off filename's extension so we can add our own
+    if (name_end == NULL) {
+        fprintf(stderr, \"File does not have .txt extension!\\n\");
+        return 1;
+    }
+    strcpy(name_end, \".ppm\");   // Replace with .ppm
+
+    FILE* output = fopen(filename, \"w\");    // Get stream for output file
+	if (output == NULL) {	// Check if we opened the file correctly
+		fprintf(stderr, \"Unable to write to %s!\\n\", filename);
+		return 1;
+	}
+    fprintf(output, \"P3\\n%i %i\\n255\\n\", width, height); // Write the header to output
+    
+    const char* format = \"%i %i %i\\n\";	// Define string format
+	for (int i = 0; i < height; ++i) {	// Set color for each pixel in the image
+		for (int j = 0; j < width; ++j) {
+
+			// Calculate current progress in row/column and transform the axes so we're on a cartesian plane
+			float i_percent = (float)i / (float)height;
+			float j_percent = (float)j / (float)width;
+			float i_norm = -i_percent + 0.5f;
+			float j_norm = j_percent - 0.5f;
+			
+			// Calculate intensity of pixel
+			float percent_intensity = (cosf(powf(j_norm * (float)M_PI * 4.0f, i % 10)) + sinf(powf(i_norm * (float)M_PI * 4.0f, j % 3))) / 2.0f + 1.0f;
+			
+			// Use intensity for RGB values
+			int r = (int)(percent_intensity * (120.0f * i_percent));
+			int g = (int)(percent_intensity * (100.0f * j_percent));
+			int b = (int)(percent_intensity * (180.0f * i_percent * j_percent));
+
+			// Print pixel to output
+			fprintf(output, format, r, g, b);
+		}
+    }
+
+
+    fclose(output); // Close output file
+	return 0;
+}
+"
+      associated_elems
+      end
+    end
+
+    artifact 129539 "Ray"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_elems
+	class_ref 130051 // Ray
+      end
+    end
+  end
+end

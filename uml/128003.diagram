@@ -1,0 +1,136 @@
+format 222
+
+classcanvas 128003 class_ref 128003 // DirectionalLight
+  classdiagramsettings member_max_width 0 end
+  xyz 42 1722 2000
+end
+classcanvas 128131 class_ref 128131 // Light
+  classdiagramsettings member_max_width 0 end
+  xyz 620 1456 2006
+end
+classcanvas 128899 class_ref 128387 // Ellipsoid
+  classdiagramsettings member_max_width 0 end
+  xyz 625 1114 2018
+end
+classcanvas 129283 class_ref 128515 // LitSceneObject
+  classdiagramsettings member_max_width 0 end
+  xyz 1000 424 2024
+end
+classcanvas 129539 class_ref 128643 // SceneObject
+  classdiagramsettings member_max_width 0 end
+  xyz 624 42 2030
+end
+classcanvas 130051 class_ref 129027 // PointLight
+  classdiagramsettings member_max_width 0 end
+  xyz 620 1720 3010
+end
+classcanvas 130435 class_ref 129155 // PolyObject
+  classdiagramsettings member_max_width 0 end
+  xyz 1209 1113 3005
+end
+classcanvas 131075 class_ref 129283 // PolyObject::Triangle
+  classdiagramsettings member_max_width 0 end
+  xyz 268 535 3016
+end
+classcanvas 132867 class_ref 129411 // SimpleSceneObject
+  classdiagramsettings member_max_width 0 end
+  xyz 250 338 3022
+end
+classcanvas 133379 class_ref 129539 // Texture
+  classdiagramsettings member_max_width 0 end
+  xyz 1529 809 3027
+end
+classcanvas 133635 class_ref 129923 // Sphere
+  classdiagramsettings member_max_width 0 end
+  xyz 40 1111 3032
+end
+classcanvas 133891 class_ref 130051 // Ray
+  classdiagramsettings member_max_width 0 end
+  xyz 1210 97 2036
+end
+relationcanvas 128259 relation_ref 128003 // <generalisation>
+  geometry VHV unfixed
+  from ref 128003 z 2007 to point 310 1680
+  line 134403 z 2007 to point 910 1680
+  line 134531 z 2007 to ref 128131
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129411 relation_ref 128259 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 425
+  from ref 128899 z 2025 to point 894 1024
+  line 139779 z 2025 to point 1239 1024
+  line 139907 z 2025 to ref 129283
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129795 relation_ref 131971 // <generalisation>
+  decenter_begin 181
+  decenter_end 879
+  from ref 129283 z 2031 to ref 129539
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130179 relation_ref 128899 // <generalisation>
+  from ref 130051 z 3011 to ref 128131
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130563 relation_ref 129155 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 615
+  from ref 130435 z 3006 to point 1486 1072
+  line 137475 z 3006 to point 1348 1072
+  line 137603 z 3006 to ref 129283
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132995 relation_ref 132227 // <generalisation>
+  geometry VHV unfixed
+  from ref 132867 z 3023 to point 550 296
+  line 139139 z 3023 to point 894 296
+  line 139267 z 3023 to ref 129539
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133123 relation_ref 132355 // <unidirectional association>
+  geometry VH
+  decenter_begin 913
+  decenter_end 114
+  from ref 132867 z 3023 to point 852 451
+  line 139651 z 3023 to ref 129283
+  role_a_pos 918 420 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133251 relation_ref 129667 // <generalisation>
+  from ref 131075 z 3023 to ref 132867
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133507 relation_ref 132099 // <directional composition>
+  geometry HV unfixed
+  decenter_begin 57
+  decenter_end 488
+  from ref 129283 z 3028 to point 1725 436
+  line 139011 z 3028 to ref 133379
+  role_a_pos 1737 775 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133763 relation_ref 132739 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 167
+  from ref 133635 z 3033 to point 310 920
+  line 134659 z 3033 to point 1093 920
+  line 134787 z 3033 to ref 129283
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134275 relation_ref 133123 // <unidirectional association>
+  decenter_begin 532
+  decenter_end 515
+  from ref 133891 z 2037 to ref 129539
+  role_a_pos 1178 118 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
