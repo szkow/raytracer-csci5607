@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -28,6 +28,7 @@
     <ClCompile Include="PolyObject.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SceneReader.cpp" />
+    <ClCompile Include="ShadingData.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Vector.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="PolyObject.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="SceneReader.h" />
+    <ClInclude Include="ShadingData.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vector.h" />

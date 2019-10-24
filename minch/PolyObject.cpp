@@ -12,15 +12,15 @@ PolyObject::PolyObject(const std::vector<Vector>& verts,
                        const std::vector<unsigned int>& normal_indices,
                        const std::vector<Vector>& uvs,
                        const std::vector<unsigned int>& uv_indices,
-                       const Vector& material_scalars,
+                       const Vector& k_scalars,
                        const Vector& diffuse_color,
-                       const Vector& specular_color, float specularity)
-    : LitSceneObject(Vector::Zero(), material_scalars, diffuse_color,
-                     specular_color, specularity),
+                       const Vector& specular_color, float specularity, float opacity, float eta)
+    : LitSceneObject(Vector::Zero(), k_scalars, diffuse_color,
+                     specular_color, specularity, opacity, eta),
       verts_(verts),
       normals_(normals),
       tex_coords_(uvs) {
-  Triangle::MakeTris(this, &tris_, verts_, indices, normals_, normal_indices,
+  Triangle::MakeTris(&light_data_, &tris_, verts_, indices, normals_, normal_indices,
                      tex_coords_, uv_indices);
 }
 
@@ -30,15 +30,15 @@ PolyObject::PolyObject(const std::vector<Vector>& verts,
                        const std::vector<unsigned int>& normal_indices,
                        const std::vector<Vector>& uvs,
                        const std::vector<unsigned int>& uv_indices,
-                       const Vector& material_scalars,
-                       const Vector& specular_color, float specularity,
+                       const Vector& k_scalars,
+                       const Vector& specular_color, float specularity, float opacity, float eta,
                        const char* texture_map)
-    : LitSceneObject(Vector::Zero(), material_scalars, specular_color,
-                     specularity, texture_map),
+    : LitSceneObject(Vector::Zero(), k_scalars, specular_color,
+                     specularity, texture_map, opacity, eta),
       verts_(verts),
       normals_(normals),
       tex_coords_(uvs) {
-  Triangle::MakeTris(this, &tris_, verts_, indices, normals_, normal_indices,
+  Triangle::MakeTris(&light_data_, &tris_, verts_, indices, normals_, normal_indices,
                      tex_coords_, uv_indices);
 }
 
@@ -74,11 +74,11 @@ SceneObject* PolyObject::RayIntersects(const Vector& dir, const Vector& origin,
   return nullptr;
 }
 
-SceneObject::LightingParcel PolyObject::LightData(const Vector& point) {
-  return light_data_;
+Vector PolyObject::TextureCoordinatesAt(const Vector& point) {
+  return point;
 }
 
-PolyObject::Triangle::Triangle(PolyObject* lighting_daddy, Vector* v0,
+PolyObject::Triangle::Triangle(ShadingData* lighting_daddy, Vector* v0,
                                Vector* v1, Vector* v2, Vector* n0, Vector* n1,
                                Vector* n2, Vector* uv0, Vector* uv1,
                                Vector* uv2)
@@ -100,7 +100,7 @@ PolyObject::Triangle::Triangle(PolyObject* lighting_daddy, Vector* v0,
 }
 
 void PolyObject::Triangle::MakeTris(
-    PolyObject* lighting_daddy, std::vector<Triangle>* tris,
+    ShadingData* lighting_daddy, std::vector<Triangle>* tris,
     std::vector<Vector>& verts, const std::vector<unsigned int>& indices,
     std::vector<Vector>& normals,
     const std::vector<unsigned int>& normal_indices,
@@ -140,18 +140,6 @@ Vector PolyObject::Triangle::Normal(const Vector& point) {
   float a, b, c;
   GetAreaticCoordinates(point, &a, &b, &c);
   return (a * *n0_ + b * *n1_ + c * *n2_).Normed();
-}
-
-SceneObject::LightingParcel PolyObject::Triangle::LightData(const Vector& point) {
-  LightingParcel light_data = daddy_->LightData(point);
-  Texture* texture = daddy_->TextureMap();
-  if (texture != nullptr) {
-    float a, b, c;
-    GetAreaticCoordinates(point, &a, &b, &c);
-    Vector interpolated_uv = a / area_ * *uv0_ + b / area_ * *uv1_ + c / area_ * *uv2_;
-    light_data.diffuse_color = texture->ColorAt(interpolated_uv);
-  }
-  return light_data;
 }
 
 SceneObject* PolyObject::Triangle::RayIntersects(const Vector& dir,
@@ -195,4 +183,11 @@ void PolyObject::Triangle::GetAreaticCoordinates(const Vector& point,
   *alpha = 0.5f * v1_to_p.Cross(e3_).Length();
   *beta = 0.5f * v0_to_p.Cross(e2_).Length();
   *gamma = 0.5f * v0_to_p.Cross(e1_).Length();
+}
+
+Vector PolyObject::Triangle::TextureCoordinatesAt(const Vector& point) {
+  float a, b, c;
+  GetAreaticCoordinates(point, &a, &b, &c);
+
+  return (a * *uv0_ + b * *uv1_ + c * *uv2_) / (3.0f * area_);
 }

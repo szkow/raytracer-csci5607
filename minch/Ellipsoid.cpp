@@ -1,8 +1,8 @@
 #include "Ellipsoid.h"
 #include "cmath"
 
-Ellipsoid::Ellipsoid(const Vector & position = Vector::Zero(), const Vector & coefficients = Vector::One(), const Vector & material_scalars = Vector::One(), const Vector & diffuse_color = Vector::One(), const Vector & specular_color = Vector::One(), int specularity = 10) :
-	LitSceneObject(position, material_scalars, diffuse_color, specular_color, specularity), coefficients_(coefficients), squared_coefficients_(Vector(coefficients[0] * coefficients[0], coefficients[1] * coefficients[1], coefficients[2] * coefficients[2]))
+Ellipsoid::Ellipsoid(const Vector & position = Vector::Zero(), const Vector & coefficients = Vector::One(), const Vector & k_scalars = Vector::One(), const Vector & diffuse_color = Vector::One(), const Vector & specular_color = Vector::One(), int specularity = 10) :
+	LitSceneObject(position, k_scalars, diffuse_color, specular_color, specularity), coefficients_(coefficients), squared_coefficients_(Vector(coefficients[0] * coefficients[0], coefficients[1] * coefficients[1], coefficients[2] * coefficients[2]))
 {
 }
 

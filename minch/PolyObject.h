@@ -13,23 +13,21 @@ class PolyObject : public LitSceneObject {
              const std::vector<unsigned int>& normal_indices,
              const std::vector<Vector>& uvs,
              const std::vector<unsigned int>& uv_indices,
-             const Vector& material_scalars, const Vector& diffuse_color,
-             const Vector& specular_color, float specularity);
+             const Vector& k_scalars, const Vector& diffuse_color,
+             const Vector& specular_color, float specularity, float opacity, float eta);
   PolyObject(const std::vector<Vector>& verts,
              const std::vector<unsigned int>& indices,
              const std::vector<Vector>& normals,
              const std::vector<unsigned int>& normal_indices,
              const std::vector<Vector>& uvs,
              const std::vector<unsigned int>& uv_indices,
-             const Vector& material_scalars, const Vector& specular_color,
-             float specularity, const char* texture_map);
+             const Vector& k_scalars, const Vector& specular_color,
+             float specularity, float opacity, float eta, const char* texture_map);
   ~PolyObject();
 
   virtual Vector Normal(const Vector& point);
   virtual SceneObject* RayIntersects(const Vector& dir, const Vector& origin,
                                         float* t1, float* t2);
-  virtual LightingParcel LightData(const Vector& point);
-
 
  protected:
   class Triangle;
@@ -37,15 +35,17 @@ class PolyObject : public LitSceneObject {
   std::vector<Vector> verts_;
   std::vector<Vector> normals_;
   std::vector<Vector> tex_coords_;
+
+  virtual Vector TextureCoordinatesAt(const Vector& point);
 };
 
 class PolyObject::Triangle : public SimpleSceneObject {
  public:
-  Triangle(PolyObject* daddy_, Vector* v0, Vector* v1, Vector* v2,
+  Triangle(ShadingData* daddy_, Vector* v0, Vector* v1, Vector* v2,
            Vector* n0 = nullptr, Vector* n1 = nullptr, Vector* n2 = nullptr,
            Vector* uv0 = nullptr, Vector* uv1 = nullptr, Vector* uv2 = nullptr);
 
-  static void MakeTris(PolyObject* lighting_daddy, std::vector<Triangle>* tris,
+  static void MakeTris(ShadingData* lighting_daddy, std::vector<Triangle>* tris,
                        std::vector<Vector>& verts,
                        const std::vector<unsigned int>& indices,
                        std::vector<Vector>& normals,
@@ -53,7 +53,6 @@ class PolyObject::Triangle : public SimpleSceneObject {
                        std::vector<Vector>& tex_coords,
                        const std::vector<unsigned int>& tex_coord_indices);
   virtual Vector Normal(const Vector& point);
-  virtual LightingParcel LightData(const Vector& point);
   virtual SceneObject* RayIntersects(const Vector& dir, const Vector& origin,
                                         float* t1, float* t2);
   void GetAreaticCoordinates(const Vector& point, float* alpha, float* beta,
@@ -76,6 +75,8 @@ class PolyObject::Triangle : public SimpleSceneObject {
   Vector e2_;
   Vector e3_;
   float area_;
+
+  virtual Vector TextureCoordinatesAt(const Vector& point);
 };
 
 #endif

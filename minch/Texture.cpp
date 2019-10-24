@@ -57,11 +57,11 @@ Texture::Texture(const Texture& copy) {
   }
 }
 
-Vector Texture::ColorAt(const Vector& point) {
+Vector Texture::ColorAt(const Vector& point) const {
   return ColorAt(point[0], point[1]);
 }
 
-Vector Texture::ColorAt(float u, float v) {
+Vector Texture::ColorAt(float u, float v) const {
   if (u < 0.0f || v < 0.0f) {
     fprintf(stderr, "Invalid u (%f) and v (%f) coordinates!\n", u, v);
     throw 1;

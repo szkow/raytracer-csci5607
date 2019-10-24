@@ -13,12 +13,15 @@ class Sphere : public LitSceneObject {
  private:
   float radius_;
 
+ protected:
+  virtual Vector TextureCoordinatesAt(const Vector& point);
+
  public:
-  Sphere(const Vector& position, float radius, const Vector& material_scalars,
+  Sphere(const Vector& position, float radius, const Vector& k_scalars,
          const Vector& diffuse_color, const Vector& specular_color,
-         int specularity);
-  Sphere(const Vector& position, float radius, const Vector& material_scalars,
-         const Vector& specular_color, int specularity,
+         float specularity, float opacity, float eta);
+  Sphere(const Vector& position, float radius, const Vector& k_scalars,
+         const Vector& specular_color, float specularity, float opacity, float eta,
          const char* texture_map);
 
   ~Sphere();
@@ -26,7 +29,7 @@ class Sphere : public LitSceneObject {
   virtual SceneObject* RayIntersects(const Vector& dir, const Vector& origin,
                                      float* t1, float* t2);
   virtual Vector Normal(const Vector& point);
-  virtual LightingParcel LightData(const Vector& point);
+
 };
 
 #endif

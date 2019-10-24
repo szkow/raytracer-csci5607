@@ -11,10 +11,10 @@ PointLight::~PointLight()
 {
 }
 
-Vector PointLight::PhongDiffuseSpecular(const Vector & point, const Vector & normal, const Vector & view, SceneObject::LightingParcel& light_data)
+Vector PointLight::PhongDiffuseSpecular(const Vector & point, const Vector & normal, const Vector & view, SceneObject* object)
 {
 	// Calculate lighting as normal
-	Vector regular_phong = Light::PhongDiffuseSpecular(point, normal, view, light_data);
+	Vector regular_phong = Light::PhongDiffuseSpecular(point, normal, view, object);
 
 	// If we don't have an attenuated light, don't do anything
 	if (attenuation_ == Vector(1, 0, 0)) return regular_phong;
