@@ -39,6 +39,7 @@
     <Text Include="img.txt" />
     <Text Include="README.txt" />
     <Text Include="scene.txt" />
+    <Text Include="simple.txt" />
     <Text Include="teapot.txt" />
   </ItemGroup>
   <ItemGroup>

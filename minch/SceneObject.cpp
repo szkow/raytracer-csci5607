@@ -16,7 +16,7 @@ LitSceneObject::LitSceneObject(const Vector& position, const Vector& k_scalars,
       light_data_(ShadingData(k_scalars, texture_map, specular_color,
                               specularity, opacity, eta)) {}
 
-LitSceneObject::~LitSceneObject() { delete &light_data_; }
+LitSceneObject::~LitSceneObject() { }
 
 SceneObject::SceneObject(Vector position) : position_(position) {}
 
@@ -38,9 +38,9 @@ const Vector& LitSceneObject::KScalars() { return light_data_.k_; }
 
 const Vector& LitSceneObject::SpecularColor() { return light_data_.specular_; }
 
-const Vector& LitSceneObject::Opacity() { return light_data_.opacity_; }
+float LitSceneObject::Opacity() { return light_data_.opacity_; }
 
-const Vector& LitSceneObject::IndexOfRefraction() {
+float LitSceneObject::IndexOfRefraction() {
   return light_data_.index_of_refraction_;
 }
 
@@ -64,12 +64,12 @@ float SimpleSceneObject::Specularity() { return shader_->specularity_; }
 const Vector& SimpleSceneObject::KScalars() { return shader_->k_; }
 
 const Vector& SimpleSceneObject::SpecularColor() {
-  return shader_->specularity_;
+  return shader_->specular_;
 }
 
-const Vector& SimpleSceneObject::Opacity() { return shader_->opacity_; }
+float SimpleSceneObject::Opacity() { return shader_->opacity_; }
 
-const Vector& SimpleSceneObject::IndexOfRefraction() {
+float SimpleSceneObject::IndexOfRefraction() {
   return shader_->index_of_refraction_;
 }
 

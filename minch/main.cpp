@@ -37,6 +37,10 @@ float ShadowRay(Ray* ray, Light* light,
 Vector ShadeRay(const Ray& incoming_ray,
                 const SceneReader::SceneParameters& params);
 
+// Recursively calculates global lighting
+Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
+                    const SceneReader::SceneParameters& params, long depth);
+
 // Does the raytracing using the above methods
 int TraceRay(float* pixels, const SceneReader::SceneParameters& params);
 
@@ -148,6 +152,11 @@ Vector ShadeRay(const Ray& incoming_ray,
     color = color + shadowed * phong_component;
   }
 
+  // Recursively add in reflective and refracted raytracing
+  std::stack<float> eta_stack = std::stack<float>();
+  eta_stack.push(1.0f); // Push air's eta
+  color = color + RecursiveRay(incoming_ray, eta_stack, params, 1);  // RECURSE!! 
+
   // Add in the ambient contribution
   Vector k = object->KScalars();
   color = color + k[0] * object->DiffuseColor(intersection);
@@ -198,16 +207,26 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
   // Get some data from the object
   Vector intersection =
       incident_ray.origin + incident_ray.t * incident_ray.direction;
-  Vector incident_direction = -1.0f * incident_ray.direction.Normed();
+  Vector incident_direction = -incident_ray.direction.Normed(); // Flip the direction
   Vector normal = incident_ray.object->Normal(intersection);
+  if (incident_direction * normal < 1.0f) {
+    normal = -normal;
+  }
+  float i_dot_n = incident_direction * normal;
   float object_eta = incident_ray.object->IndexOfRefraction();
   float incident_eta = eta_stack.top();  // Just peek at the index. We'll remove
                                          // it when we refract a ray
+
 
   // Calculate reflected direction
   Vector reflected_direction =
       2.0f * (normal * incident_direction) * normal - incident_direction;
   reflected_direction = reflected_direction.Normed();
+
+  // Apply the Shlick Approximation to calculate Fresnel effect
+  float f_0 = (object_eta - incident_eta) / (object_eta + incident_eta) *
+              (object_eta - incident_eta) / (object_eta + incident_eta);
+  float f_r = f_0 + (1.0f - f_0) * std::powf(1.0f - i_dot_n, 5.0f);
 
   // Cast the reflected ray
   Ray reflected_ray = {intersection, reflected_direction, -1.0f, nullptr};
@@ -215,15 +234,15 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
 
   // Recurse with reflected ray
   reflection_component =
-      RecursiveRay(reflected_ray, eta_stack, params, depth + 1l);
+      f_r * RecursiveRay(reflected_ray, eta_stack, params, depth + 1l);
 
   // We only calculate the transmitted ray if the object is transparent
   if (incident_ray.object->IsTransparent()) {
     // Calculate a refracted direction
-    float i_dot_n = incident_direction * normal;
+    float opacity = incident_ray.object->Opacity();
     float index_ratios = incident_eta / object_eta;
     Vector refracted_direction =
-        -1.0f * normal *
+        -normal *
             std::sqrtf(1.0f - (index_ratios * index_ratios) *
                                   (1.0f - i_dot_n * i_dot_n)) +
         index_ratios * i_dot_n * (normal - incident_direction);
@@ -232,50 +251,16 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
     // Cast the refracted ray
     Ray refracted_ray = {intersection, refracted_direction, -1.0f, nullptr};
 
-    // Recurse with refracted ray
+    // Recurse with refracted ray (applying Beer attenuation)
     eta_stack.pop();  // Pop the incident index
     eta_stack.push(object_eta); // And push on the new medium's
     refraction_component =
+        std::expf(-opacity * refracted_ray.t) *
         RecursiveRay(refracted_ray, eta_stack, params, depth + 1l);
   }
 
-  // Apply the Shlick Approximation to calculate Fresnel effect
-
-
   // Return the sum of the reflection and refraction
-  return f_r * reflection_component +
-         std::expf(-attenuation * refracted_ray.t) * refraction_component;
-}
-
-Vector ReflectiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
-                     SceneReader::SceneParameters& params, long depth) {
-  // Base case
-  if (depth >= RECURSIVE_RAY_DEPTH) {
-    return Vector::Zero();  // Identity of addition
-  }
-
-  if (incident_ray.t < 0.0f) {
-    return Vector::Zero();  // TODO: add support for skybox
-  }
-
-  // Get some data from the object
-  Vector intersection =
-      incident_ray.origin + incident_ray.t * incident_ray.direction;
-  Vector incident_direction = -1.0f * incident_ray.direction.Normed();
-  Vector normal = incident_ray.object->Normal(intersection);
-  float object_eta = incident_ray.object->IndexOfRefraction();
-
-  // Calculate reflected direction
-  Vector reflection;
-  Vector reflected_direction =
-      2.0f * (normal * incident_direction) * normal - incident_direction;
-  reflected_direction = reflected_direction.Normed();
-
-  // Cast the reflected ray
-  Ray reflected_ray = {intersection, reflected_direction, -1.0f, nullptr};
-  CastRay(&reflected_ray, params);
-  reflection = RecursiveRay(reflected_ray, incident_index, f_r, attenuation,
-                            depth / 2l, params);
+  return reflection_component + refraction_component;
 }
 
 int TraceRay(float* pixels, const SceneReader::SceneParameters& params) {

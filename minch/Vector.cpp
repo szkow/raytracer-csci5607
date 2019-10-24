@@ -82,6 +82,10 @@ Vector Vector::operator-(const Vector & other) const
 	return Vector(x_ - other.x_, y_ - other.y_, z_ - other.z_);
 }
 
+Vector Vector::operator-() const {
+  return Vector(-x_, -y_, -z_);
+}
+
 float Vector::operator[](const unsigned int i) const
 {
 	return arr_[i];

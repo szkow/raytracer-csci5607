@@ -24,7 +24,7 @@ class SceneObject {
   virtual float Specularity() = 0;
   virtual const Vector& KScalars() = 0;
   virtual const Vector& SpecularColor() = 0;
-  virtual const Vector& Opacity() = 0;
+  virtual float Opacity() = 0;
   virtual bool IsTransparent() = 0;
 
   // Virtuals
@@ -60,7 +60,7 @@ class LitSceneObject : public SceneObject {
   virtual float Specularity();
   virtual const Vector& KScalars();
   virtual const Vector& SpecularColor();
-  virtual const Vector& Opacity();
+  virtual float Opacity();
   virtual float IndexOfRefraction();
   virtual bool IsTransparent();
 
@@ -92,7 +92,7 @@ class SimpleSceneObject : public SceneObject {
   virtual float Specularity();
   virtual const Vector& KScalars();
   virtual const Vector& SpecularColor();
-  virtual const Vector& Opacity();
+  virtual float Opacity();
   virtual float IndexOfRefraction();
   virtual bool IsTransparent();
 
