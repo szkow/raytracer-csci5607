@@ -110,7 +110,7 @@ bool CastRay(Ray* ray, const SceneReader::SceneParameters& params) {
   // Return false
   if (min_hit == nullptr) {
     ray->object = nullptr;
-    ray->t = -1.0f;
+    ray->t = INFINITY;
     return false;
   }
 
@@ -196,20 +196,21 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
                     const SceneReader::SceneParameters& params, long depth) {
   // Base cases: if we've reached our depth or if the incident ray never hit
   // anything
-  if (depth > RECURSIVE_RAY_DEPTH) {
+  if (depth > RECURSIVE_RAY_DEPTH || incident_ray.t < 0.0f) {
     return Vector::Zero();  // Identity of addition
-  } else if (incident_ray.t < 0.0f) {
-    return Vector::Zero();  // TODO: add support for skybox
+  } else if (isinf(incident_ray.t)) {
+    return params.background; // TODO: add support for skybox
   }
 
-  Vector reflection_component, refraction_component;
+  Vector reflection_component = Vector::Zero();
+  Vector refraction_component = Vector::Zero();
 
   // Get some data from the object
   Vector intersection =
       incident_ray.origin + incident_ray.t * incident_ray.direction;
   Vector incident_direction = -incident_ray.direction.Normed(); // Flip the direction
   Vector normal = incident_ray.object->Normal(intersection);
-  if (incident_direction * normal < 1.0f) {
+  if (incident_direction * normal < 0.0f) {
     normal = -normal;
   }
   float i_dot_n = incident_direction * normal;
@@ -224,8 +225,8 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
   reflected_direction = reflected_direction.Normed();
 
   // Apply the Shlick Approximation to calculate Fresnel effect
-  float f_0 = (object_eta - incident_eta) / (object_eta + incident_eta) *
-              (object_eta - incident_eta) / (object_eta + incident_eta);
+  float f_0 = ((incident_eta - object_eta) / (incident_eta + object_eta)) *
+              ((incident_eta - object_eta) / (incident_eta + object_eta));
   float f_r = f_0 + (1.0f - f_0) * std::powf(1.0f - i_dot_n, 5.0f);
 
   // Cast the reflected ray
@@ -236,6 +237,7 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
   reflection_component =
       f_r * RecursiveRay(reflected_ray, eta_stack, params, depth + 1l);
 
+  /*
   // We only calculate the transmitted ray if the object is transparent
   if (incident_ray.object->IsTransparent()) {
     // Calculate a refracted direction
@@ -250,15 +252,17 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
 
     // Cast the refracted ray
     Ray refracted_ray = {intersection, refracted_direction, -1.0f, nullptr};
+    CastRay(&refracted_ray, params);
 
     // Recurse with refracted ray (applying Beer attenuation)
     eta_stack.pop();  // Pop the incident index
     eta_stack.push(object_eta); // And push on the new medium's
     refraction_component =
-        std::expf(-opacity * refracted_ray.t) *
         RecursiveRay(refracted_ray, eta_stack, params, depth + 1l);
+    refraction_component =
+        std::expf(-opacity * incident_ray.t) * refraction_component;
   }
-
+  */
   // Return the sum of the reflection and refraction
   return reflection_component + refraction_component;
 }
