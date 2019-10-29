@@ -14,7 +14,8 @@ class PolyObject : public LitSceneObject {
              const std::vector<Vector>& uvs,
              const std::vector<unsigned int>& uv_indices,
              const Vector& k_scalars, const Vector& diffuse_color,
-             const Vector& specular_color, float specularity, float opacity, float eta);
+             const Vector& specular_color, float specularity, float opacity,
+             float eta);
   PolyObject(const std::vector<Vector>& verts,
              const std::vector<unsigned int>& indices,
              const std::vector<Vector>& normals,

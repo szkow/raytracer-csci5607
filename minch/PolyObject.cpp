@@ -1,8 +1,8 @@
 #include "PolyObject.h"
 #include <cmath>
 
-#define TRIANGLE_EPSILON 0.0001f
-#define TRIANGLE_SELF_INTERSECT_EPSILON 0.001f
+#define TRIANGLE_EPSILON 0.01f
+#define TRIANGLE_SELF_INTERSECT_EPSILON 0.01f
 
 PolyObject::PolyObject() : LitSceneObject() {}
 
