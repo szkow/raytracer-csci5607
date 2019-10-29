@@ -3,9 +3,6 @@
 #endif
 
 #define SELF_INTERSECT_EPSILON 0.1f
-//#define USE_SOFT_SHADOWS
-#define SOFT_SHADOW_SAMPLES 75
-#define SOFT_SHADOW_PERTURB 0.4f
 #define RECURSIVE_RAY_DEPTH 100l
 
 #include "ImageWriter.h"
@@ -29,8 +26,9 @@ typedef struct {
 // Shoots a ray into the scene, fills the given ray if hits something
 bool CastRay(Ray* ray, const SceneReader::SceneParameters& params);
 
-// Shoots a ray to determine shadows
-float ShadowRay(Ray* ray, Light* light,
+// Shoots a ray to determine shadowing on given object, returning the
+// percent shadow 'strength'
+float ShadowRay(SceneObject* object, Ray* ray, Light* light,
                 const SceneReader::SceneParameters& params);
 
 // Does local and global illumination stuff and returns a final pixel
@@ -40,7 +38,7 @@ Vector ShadeRay(const Ray& incoming_ray,
 
 // Calculates Blinn-Phong lighting
 Vector PhongShade(const Ray& intersecting_ray,
-                 const SceneReader::SceneParameters& params);
+                  const SceneReader::SceneParameters& params);
 
 // Recursively calculates global lighting
 Vector ReflectedRay(const Ray& incident_ray, std::stack<float>& eta_stack,
@@ -153,7 +151,7 @@ Vector ShadeRay(const Ray& incoming_ray,
   Vector refractive_part =
       RefractedRay(incoming_ray, eta_stack, params, 1) - local_phong;
   Vector global_illumination = k[2] * reflective_part + refractive_part;
-  
+
   final_color = local_phong + global_illumination;
   return final_color.Clamped(1.0f);
 }
@@ -178,8 +176,7 @@ Vector PhongShade(const Ray& intersecting_ray,
     // Cast a ray to determine if pixel is in shadow
     ray.origin = intersection;
     ray.direction = light->GetLightDirection(intersection);
-    float shadowed = 1.0f;
-     ShadowRay(&ray, light, params);
+    float shadowed = 1.0f - ShadowRay(object, &ray, light, params);
 
     if (shadowed == 0.0f) {
       continue;
@@ -198,33 +195,26 @@ Vector PhongShade(const Ray& intersecting_ray,
   return phong;
 }
 
-float ShadowRay(Ray* ray, Light* light,
+float ShadowRay(SceneObject* object, Ray* ray, Light* light,
                 const SceneReader::SceneParameters& params) {
   // If we don't hit anything, we're fully exposed
   if (CastRay(ray, params) == false) {
-    return 1.0f;
+    return 0.0f;
   }
   // If the light source is not a directional light, we need to test distance to
   // light against collision
   else if (light->DistanceTo(ray->origin) < ray->t) {
-    return 1.0f;
+    return 0.0f;
+  } 
+  // Disallow self-shadowing
+  // This works since we only allow convex mathematical shapes
+  // and polygonal objects are made of individual triangles 
+  // which are planes and shouldn't shade themselves
+  else if (object == ray->object) {
+    return 0.0f;
   }
-#ifndef USE_SOFT_SHADOWS
-  return 0.0f;
-#else
-  // Shoot a bunch of randomly-perturbed rays out and use the average hit
-  // percentage as an exposure percent
-  Vector origin = ray->origin;
-  Vector direction = ray->direction;
-  float sum = 0.0f;
-  for (int i = 0; i < SOFT_SHADOW_SAMPLES; ++i) {
-    Vector perturbation = (Vector::Random() * SOFT_SHADOW_PERTURB);
-    Ray soft = {origin, (direction + perturbation).Normed(), -1.0f, nullptr};
-    sum += (CastRay(&soft, params)) ? 0.0f : 1.0f;
-  }
-
-  return sum / (float)SOFT_SHADOW_SAMPLES;
-#endif
+  
+  return 1.0f;
 }
 
 /*
@@ -264,9 +254,11 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
   reflected_direction = reflected_direction.Normed();
 
   // Apply the Shlick Approximation to calculate Fresnel effect
-  float f_0 = ((incident_eta - transmitted_eta) / (incident_eta + transmitted_eta)) *
-              ((incident_eta - transmitted_eta) / (incident_eta + transmitted_eta));
-  float f_r = f_0 + (1.0f - f_0) * std::powf(1.0f - i_dot_n, 5.0f);
+  float f_0 = ((incident_eta - transmitted_eta) / (incident_eta +
+transmitted_eta)) *
+              ((incident_eta - transmitted_eta) / (incident_eta +
+transmitted_eta)); float f_r = f_0 + (1.0f - f_0) * std::powf(1.0f -
+i_dot_n, 5.0f);
 
   // Cast the reflected ray
   Ray reflected_ray = {intersection, reflected_direction, -1.0f, nullptr};
@@ -285,7 +277,8 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
     float critical_angle = std::asinf(transmitted_eta / incident_eta);
     if (std::acosf(i_dot_n) >= (critical_angle)) {
       return reflection_component;
-    } else {  // If we don't totally internally reflect, calculate transmitted ray
+    } else {  // If we don't totally internally reflect, calculate transmitted
+ray
       // Calculate a refracted direction
       Vector refracted_direction =
           -normal * std::sqrtf(1.0f - (eta_ratio * eta_ratio) *
@@ -302,7 +295,8 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
       Ray refracted_ray = {intersection, refracted_direction, -1.0f, nullptr};
       // Try to avoid self-intersection due to numerical error
       refracted_ray.origin =
-          refracted_ray.origin + SELF_INTERSECT_EPSILON * refracted_ray.direction;
+          refracted_ray.origin + SELF_INTERSECT_EPSILON *
+refracted_ray.direction;
 
       // Cast the refraction
       CastRay(&refracted_ray, params);
@@ -312,8 +306,9 @@ Vector RecursiveRay(const Ray& incident_ray, std::stack<float>& eta_stack,
       Vector recursive_refraction =
           RecursiveRay(refracted_ray, eta_stack, params, depth + 1l);
       refraction_component =
-          (1.0f - f_r) * std::expf(-opacity * incident_ray.t) * recursive_refraction;
-      eta_stack.pop();  // Pop the medium's index, since we're done recursing
+          (1.0f - f_r) * std::expf(-opacity * incident_ray.t) *
+recursive_refraction; eta_stack.pop();  // Pop the medium's index, since we're
+done recursing
     }
   }
 
@@ -366,7 +361,8 @@ Vector ReflectedRay(const Ray& incident_ray, std::stack<float>& eta_stack,
   CastRay(&reflected_ray, params);
 
   // Recurse with reflected ray, factoring in intersection lighting
-  return object_illumination + f_r * ReflectedRay(reflected_ray, eta_stack, params, depth + 1l);
+  return object_illumination +
+         f_r * ReflectedRay(reflected_ray, eta_stack, params, depth + 1l);
 }
 
 Vector RefractedRay(const Ray& incident_ray, std::stack<float>& eta_stack,
