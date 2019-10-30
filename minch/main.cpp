@@ -133,6 +133,7 @@ Vector ShadeRay(const Ray& incoming_ray,
                 const SceneReader::SceneParameters& params) {
   SceneObject* object = incoming_ray.object;
   Vector k = object->KScalars();
+  Vector specular_color = object->SpecularColor();
 
   Vector final_color = Vector::Zero();
 
@@ -150,7 +151,12 @@ Vector ShadeRay(const Ray& incoming_ray,
       ReflectedRay(incoming_ray, eta_stack, params, 1) - local_phong;
   Vector refractive_part =
       RefractedRay(incoming_ray, eta_stack, params, 1) - local_phong;
-  Vector global_illumination = k[2] * reflective_part + refractive_part;
+
+  Vector colored_reflective_part =
+      Vector(specular_color[0] * reflective_part[0],
+             specular_color[1] * reflective_part[1],
+             specular_color[2] * reflective_part[2]);
+  Vector global_illumination = k[2] * colored_reflective_part + refractive_part;
 
   final_color = local_phong + global_illumination;
   return final_color.Clamped(1.0f);
@@ -166,7 +172,7 @@ Vector PhongShade(const Ray& intersecting_ray,
   Vector k = object->KScalars();
 
   Ray ray;
-  Vector phong;
+  Vector phong = Vector::Zero();
 
   // Sum diffuse and specular contributions from each light source in the scene
   for (std::vector<Light*>::const_iterator i = params.lights.cbegin();
@@ -205,16 +211,42 @@ float ShadowRay(SceneObject* object, Ray* ray, Light* light,
   // light against collision
   else if (light->DistanceTo(ray->origin) < ray->t) {
     return 0.0f;
-  } 
+  }
   // Disallow self-shadowing
   // This works since we only allow convex mathematical shapes
-  // and polygonal objects are made of individual triangles 
+  // and polygonal objects are made of individual triangles
   // which are planes and shouldn't shade themselves
   else if (object == ray->object) {
     return 0.0f;
   }
-  
-  return 1.0f;
+
+  // Now, we have to find all the objects the ray intersects with and take into
+  // account the opacities of all the objects we encounter
+  Ray mutable_ray = *ray;
+  float net_opacity = 0.0f;
+  do {
+    // Consider the opacity of the object hit
+    if (!mutable_ray.object->IsTransparent()) {
+      // If we hit a completely opaque object, we know we're fully shadowed
+      return 1.0f;
+    } else if (net_opacity == 0.0f) {
+      net_opacity += mutable_ray.object->Opacity();
+    } else {
+      net_opacity *= 1.0f + mutable_ray.object->Opacity();
+    }
+
+    // Define a new ray that continues through the hit object
+    mutable_ray.origin =
+        mutable_ray.origin + mutable_ray.t * mutable_ray.direction;
+    mutable_ray.t = -1.0f;
+    mutable_ray.object = nullptr;
+
+    // Cast the ray
+    CastRay(&mutable_ray, params);
+  } while (!isinf(mutable_ray.t));
+
+  // Clamp the shadowing to [0, 1] and return it
+  return (net_opacity > 1.0f) ? 1.0f : net_opacity;
 }
 
 /*
@@ -335,12 +367,8 @@ Vector ReflectedRay(const Ray& incident_ray, std::stack<float>& eta_stack,
     normal = -normal;
   }
   float i_dot_n = incident_direction * normal;
-  float incident_eta = eta_stack.top();  // Just peek at the index. We'll remove
-                                         // it when we refract a ray
+  float incident_eta = eta_stack.top();
   float transmitted_eta = incident_ray.object->IndexOfRefraction();
-  if (transmitted_eta == incident_eta) {  // Check if we're exiting an object
-    transmitted_eta = 1.0f;
-  }
 
   // Calculate the object's lighting
   Vector object_illumination = PhongShade(incident_ray, params);
@@ -351,9 +379,9 @@ Vector ReflectedRay(const Ray& incident_ray, std::stack<float>& eta_stack,
   reflected_direction = reflected_direction.Normed();
 
   // Apply the Shlick Approximation to calculate Fresnel effect
-  float f_0 =
-      ((incident_eta - transmitted_eta) / (incident_eta + transmitted_eta)) *
-      ((incident_eta - transmitted_eta) / (incident_eta + transmitted_eta));
+  float f_0 = std::powf(
+      (incident_eta - transmitted_eta) / (incident_eta + transmitted_eta),
+      2.0f); 
   float f_r = f_0 + (1.0f - f_0) * std::powf(1.0f - i_dot_n, 5.0f);
 
   // Cast the reflected ray
@@ -402,8 +430,8 @@ Vector RefractedRay(const Ray& incident_ray, std::stack<float>& eta_stack,
 
     // Apply the Shlick Approximation to calculate Fresnel effect
     float f_0 =
-        ((incident_eta - transmitted_eta) / (incident_eta + transmitted_eta)) *
-        ((incident_eta - transmitted_eta) / (incident_eta + transmitted_eta));
+        std::powf((incident_eta - transmitted_eta) / (incident_eta + transmitted_eta),
+         2.0f);
     float f_r = f_0 + (1.0f - f_0) * std::powf(1.0f - i_dot_n, 5.0f);
 
     // We only calculate the transmitted ray if the object is transparent

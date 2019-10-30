@@ -189,5 +189,5 @@ Vector PolyObject::Triangle::TextureCoordinatesAt(const Vector& point) {
   float a, b, c;
   GetAreaticCoordinates(point, &a, &b, &c);
 
-  return (a * *uv0_ + b * *uv1_ + c * *uv2_) / (3.0f * area_);
+  return (a * *uv0_ + b * *uv1_ + c * *uv2_) / (area_);
 }
