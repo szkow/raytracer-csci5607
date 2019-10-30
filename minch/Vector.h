@@ -32,6 +32,7 @@ class Vector {
   Vector operator+(const Vector& other) const;
 
   Vector operator-(const Vector& other) const;
+  Vector operator-() const;
 
   float operator[](const unsigned int i) const;
 

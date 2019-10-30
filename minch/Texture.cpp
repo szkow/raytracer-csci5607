@@ -57,17 +57,18 @@ Texture::Texture(const Texture& copy) {
   }
 }
 
-Vector Texture::ColorAt(const Vector& point) {
+Vector Texture::ColorAt(const Vector& point) const {
   return ColorAt(point[0], point[1]);
 }
 
-Vector Texture::ColorAt(float u, float v) {
+Vector Texture::ColorAt(float u, float v) const {
   if (u < 0.0f || v < 0.0f) {
     fprintf(stderr, "Invalid u (%f) and v (%f) coordinates!\n", u, v);
     throw 1;
   }
-  unsigned int j = (unsigned int)roundf(u * width_);
-  unsigned int i = (unsigned int)roundf(v * height_);
+
+  unsigned int j = (unsigned int)std::roundf(u * (float)width_);
+  unsigned int i = (unsigned int)std::roundf(v * (float)height_);
   j = (j - 1) % width_;
   i = (i - 1) % height_;
 

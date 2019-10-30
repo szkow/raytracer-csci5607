@@ -10,8 +10,8 @@ class Texture {
   Texture(const char* filename = nullptr);
   ~Texture();
 
-  Vector ColorAt(const Vector& point);
-  Vector ColorAt(float u, float v);
+  Vector ColorAt(const Vector& point) const;
+  Vector ColorAt(float u, float v) const;
 
  protected:
   Vector** map_;

@@ -51,6 +51,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShadingData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="img.txt">
@@ -69,6 +72,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="teapot.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="simple.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
@@ -104,6 +110,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadingData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -23,6 +23,7 @@ int SceneReader::Read(const char* filename, SceneParameters* params) {
   float diffuse_r, diffuse_g, diffuse_b, spec_r, spec_g, spec_b, const_a,
       const_d, const_s;  // Material colors
   float specularity;     // Material specularity
+  float opacity, eta;     // Transparent material stuffs
   unsigned int v_1, v_2, v_3, t_1, t_2, t_3, n_1, n_2,
       n_3;  // Indices into verts list
   std::vector<Vector> verts;
@@ -120,13 +121,13 @@ int SceneReader::Read(const char* filename, SceneParameters* params) {
           params->objects.push_back(new PolyObject(
               verts, vert_indices, normals, normal_indices, uvs, uv_indices,
               Vector(const_a, const_d, const_s), Vector(spec_r, spec_g, spec_b),
-              specularity, texture_map.c_str()));
+              specularity, opacity, eta, texture_map.c_str()));
         } else {
           params->objects.push_back(
               new PolyObject(verts, vert_indices, normals, normal_indices, uvs,
                              uv_indices, Vector(const_a, const_d, const_s),
                              Vector(diffuse_r, diffuse_g, diffuse_b),
-                             Vector(spec_r, spec_g, spec_b), specularity));
+                             Vector(spec_r, spec_g, spec_b), specularity, opacity, eta));
         }
 
         // Reset the vectors so we don't double up verts, etc.
@@ -138,10 +139,10 @@ int SceneReader::Read(const char* filename, SceneParameters* params) {
         normal_indices.clear();
       }
 
-      scan_return = fscanf(input, "%f %f %f %f %f %f %f %f %f %f\n", &diffuse_r,
+      scan_return = fscanf(input, "%f %f %f %f %f %f %f %f %f %f %f %f\n", &diffuse_r,
                            &diffuse_g, &diffuse_b, &spec_r, &spec_g, &spec_b,
-                           &const_a, &const_d, &const_s, &specularity);
-      if (scan_return < 10) {
+                           &const_a, &const_d, &const_s, &specularity, &opacity, &eta);
+      if (scan_return < 12) {
         READ_ERROR(input, "Invalid mtlcolor arguments provided");
       }
       if (diffuse_r < 0.0f || diffuse_g < 0.0f || diffuse_b < 0.0f ||
@@ -149,8 +150,8 @@ int SceneReader::Read(const char* filename, SceneParameters* params) {
           const_d < 0.0f || const_s < 0.0f || specularity < 0 ||
           diffuse_r > 1.0f || diffuse_g > 1.0f || diffuse_b > 1.0f ||
           spec_r > 1.0f || spec_g > 1.0f || spec_b > 1.0f || const_a > 1.0f ||
-          const_d > 1.0f || const_s > 1.0f) {
-        READ_ERROR(input, "Invalid color value provided!");
+          const_d > 1.0f || const_s > 1.0f || eta < 0.0f || opacity < 0.0f || opacity > 1.0f) {
+        READ_ERROR(input, "Invalid mtlcolor value provided!");
       }
 
       using_texture = false;                    // Change the texture flag
@@ -161,13 +162,13 @@ int SceneReader::Read(const char* filename, SceneParameters* params) {
           params->objects.push_back(new PolyObject(
               verts, vert_indices, normals, normal_indices, uvs, uv_indices,
               Vector(const_a, const_d, const_s), Vector(spec_r, spec_g, spec_b),
-              specularity, texture_map.c_str()));
+              specularity, opacity, eta, texture_map.c_str()));
         } else {
           params->objects.push_back(
               new PolyObject(verts, vert_indices, normals, normal_indices, uvs,
                              uv_indices, Vector(const_a, const_d, const_s),
                              Vector(diffuse_r, diffuse_g, diffuse_b),
-                             Vector(spec_r, spec_g, spec_b), specularity));
+                             Vector(spec_r, spec_g, spec_b), specularity, opacity, eta));
         }
 
         // Reset the vectors so we don't double up verts, etc.
@@ -200,13 +201,13 @@ int SceneReader::Read(const char* filename, SceneParameters* params) {
         if (using_texture) {
           params->objects.push_back(new Sphere(
               Vector(x, y, z), radius, Vector(const_a, const_d, const_s),
-              Vector(spec_r, spec_g, spec_b), specularity,
+              Vector(spec_r, spec_g, spec_b), specularity, opacity, eta,
               texture_map.c_str()));
         } else {
           params->objects.push_back(new Sphere(
               Vector(x, y, z), radius, Vector(const_a, const_d, const_s),
               Vector(diffuse_r, diffuse_g, diffuse_b),
-              Vector(spec_r, spec_g, spec_b), specularity));
+              Vector(spec_r, spec_g, spec_b), specularity, opacity, eta));
         }
       }
 
@@ -443,13 +444,13 @@ int SceneReader::Read(const char* filename, SceneParameters* params) {
       params->objects.push_back(new PolyObject(
           verts, vert_indices, normals, normal_indices, uvs, uv_indices,
           Vector(const_a, const_d, const_s), Vector(spec_r, spec_g, spec_b),
-          specularity, texture_map.c_str()));
+          specularity, opacity, eta, texture_map.c_str()));
     } else {
       params->objects.push_back(
           new PolyObject(verts, vert_indices, normals, normal_indices, uvs,
                          uv_indices, Vector(const_a, const_d, const_s),
                          Vector(diffuse_r, diffuse_g, diffuse_b),
-                         Vector(spec_r, spec_g, spec_b), specularity));
+                         Vector(spec_r, spec_g, spec_b), specularity, opacity, eta));
     }
   }
   fclose(input);
